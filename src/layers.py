@@ -1,6 +1,6 @@
 inputs = [1, 2, 3, 4]
 weights = [[0.8, 0.5, -0.1, 0.2], [0.6, 0.7, -0.1, -0.4], [0.9, 0.2, 0.2, -0.6]]# ,[-0.8, 0.5, 0.1, 0.2] 
-biases = [2, -1, 3, 0]
+biases = [2, -1, 3]
 
 # Output of current layer
 layer_outputs = []
@@ -30,23 +30,22 @@ import numpy as np
 layer_outputs = np.dot(weights, inputs) + biases
 print(layer_outputs)
 
-print("--- IGNORE ---")
-a = np.dot(weights, inputs) # (3,4) . (4,) = (3,)
-b = np.dot(inputs, weights) # (4,) . (3,4) = ERROR
-print(a, b)
 
-# a = [
-#     [3, 4, 5],
-#     [6, 7, 8]
-# ]
-# b = [1,2,3]
+print("---- Row vector ----")
+row1 = np.array([[1,2,3]])
+list1 = [4,5,6]
+row2= np.array([list1])
+row3 = np.expand_dims(np.array(list1), axis=0)
 
-# print(np.dot(a,b),np.dot(b,a)) RETURNS ERROR
+print("---- Column vector ----")
+# Transpose of a row vector
+col1 = np.array([[1],[2],[3]]).T
 
 
-A = [[1, 2],
-     [3, 4]]
-
-B = [[5, 6],
-     [7, 8]]
-print(np.dot(A, B))
+print("---- Batch of inputs ----")
+# HERE THE DOT PRODUCT ORDER IS IMPORTANT, FIRST INPUT THEN WEIGHTS TRANSPOSED(WE WANT SAMPLE RESULTS)
+batch_inputs = np.array([[1,2,3,4],
+                         [5,6,7,8],
+                         [9,10,11,12]])
+batch_outputs = np.dot(batch_inputs, np.array(weights).T) + biases
+print(batch_outputs)
